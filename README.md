@@ -3,6 +3,11 @@
 ## Temporary
 .env file is available isn't ignored, for local environment on macOs
 
+## Install typeScript globally if not previously installed
+### `npm install -g typescript`
+### `npm install -g ts-node`
+
+
 ## Available Scripts
 
 In the project directory, you can run:
