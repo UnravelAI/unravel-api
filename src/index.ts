@@ -1,5 +1,10 @@
+import "reflect-metadata";
 import dotenv from "dotenv";
-import express from "express";
+import Express from "express";
+import { createConnection } from "typeorm";
+
+// import routes
+import defaultRoutes from "./routes/default";
 
 // initialize configuration
 dotenv.config();
@@ -8,15 +13,21 @@ dotenv.config();
 // as if it were an environment variable
 const port = process.env.SERVER_PORT;
 
-const app = express();
+// create connection using default connection in ormconfig
+createConnection();
 
-// define a route handler for the default home page
-app.get("/", (req, res) => {
+const App = Express();
+
+// route handler for the default home page
+App.get("/", (req, res) => {
     res.send("Unravel Backend Server V1.0.0");
 });
 
-// start the express server
-app.listen(port, () => {
+// use routes
+App.use("/", defaultRoutes);
+
+// start the Express server
+App.listen(port, () => {
     // tslint:disable-next-line:no-console
     console.log(`server started at http://localhost:${port}`);
 });

@@ -1,0 +1,21 @@
+import Express from "express";
+import { getConnection } from "typeorm";
+import { User } from "../entity/model-sample";
+
+const router = Express.Router();
+
+// read all users
+router.get("/", async (req, res) => {
+    try {
+        const users = await getConnection().manager.find(User);
+        return res.status(201).json({
+            message: "Users Retreived successfully",
+            data: users,
+        });
+    } catch (error) {
+        return res.status(500).json({ error_message: error.message });
+    }
+});
+
+
+export default router;

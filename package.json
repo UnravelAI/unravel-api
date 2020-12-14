@@ -12,14 +12,19 @@
       "dev:start": "npm-run-all build start",
       "dev": "nodemon --watch src -e ts --exec npm run dev:start",
       "start": "node .",
-      "test": "echo \"Error: no test specified\" && exit 1"
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "generateMigration": "tsc && typeorm migration:generate -n",
+      "runMigration": "tsc && ts-node ./node_modules/typeorm/cli.js migration:run"
    },
    "keywords": [],
    "author": "",
    "license": "ISC",
    "dependencies": {
       "dotenv": "^8.2.0",
-      "express": "^4.17.1"
+      "express": "^4.17.1",
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.10",
+      "typeorm": "^0.2.29"
    },
    "devDependencies": {
       "@types/dotenv": "^8.2.0",
