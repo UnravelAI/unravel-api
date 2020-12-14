@@ -1,5 +1,9 @@
 {
     "compilerOptions": {
+        "lib": [
+            "es5",
+            "es6"
+        ],
         "module": "commonjs",
         "esModuleInterop": true,
         "target": "es6",
@@ -12,7 +16,9 @@
             "*": [
                 "node_modules/*"
             ]
-        }
+        },
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
     },
     "include": [
         "src/**/*"
