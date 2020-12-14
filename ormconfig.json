@@ -5,7 +5,7 @@
    "username": "root",
    "password": "",
    "database": "unravel",
-   "synchronize": true,
+   "synchronize": false,
    "logging": false,
    "entities": [
       "dist/entity/*.js"
