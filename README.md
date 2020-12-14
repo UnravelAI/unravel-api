@@ -22,10 +22,10 @@ You will also see any lint errors in the console.
 
 ### `npm run generateMigration your-migration-name`
 
-Generate new migration after every entity creation
+Generates new migration after every entity creation
 The script builds the application and generate a new migration
 
 ### `npm run runMigration`
 
-Execute new migration after generating it migration
+Executes new migration after generating it migration
 The script builds the application and executes the new migrations
