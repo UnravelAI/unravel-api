@@ -20,7 +20,7 @@ Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 The api will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm run generateMigration *yourMigrationName*`
+### `npm run generateMigration yourMigrationName`
 
 Generate new migration after every entity creation
 The script builds the application and generate a new migration
