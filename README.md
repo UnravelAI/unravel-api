@@ -7,7 +7,7 @@
 1. Clone the repo: `git clone https://github.com/UnravelAI/unravel-api`
 2. Install postgresql: https://www.postgresql.org
 3. Install postgres CLI psql
-4. Execute 'createdb unravel'
+4. Using psql create the database `createdb unravel`
 
 
 ## Install typeScript globally if not previously installed
