@@ -4,11 +4,11 @@
 .env file is available isn't ignored, for local environment on macOs
 
 ## To setup
-1. Clone the repo: `git clone https://github.com/UnravelAI/unravel-api`
+1. Clone the repo `git clone https://github.com/UnravelAI/unravel-api`
 2. Install postgresql: https://www.postgresql.org
 3. Install postgres CLI psql
 4. Using psql create the database `createdb unravel`
-
+5. Install dev-dependencies `npm install`
 
 ## Install typeScript globally if not previously installed
 #### `npm install -g typescript`
