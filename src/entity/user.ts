@@ -20,10 +20,10 @@ export class User {
     id: number;
 
     @Column()
-    first_name: string;
+    firstName: string;
 
     @Column()
-    last_name: string;
+    lastName: string;
 
     @Column()
     email: string;
@@ -31,17 +31,17 @@ export class User {
     @Column({
         default: "false",
     })
-    email_verified: boolean;
+    emailVerified: boolean;
 
     @Column({
         default: "false",
     })
-    is_teacher: boolean;
+    isTeacher: boolean;
 
     @Column({
         nullable: true,
     })
-    education_entity_name: string;
+    educationEntityName: string;
 
     @Column({
         nullable: true,
@@ -58,10 +58,10 @@ export class User {
     dob: string;
 
     @Column()
-    password_hash: string;
+    passwordHash: string;
 
     @Column()
-    password_salt: string;
+    passwordSalt: string;
 
     @CreateDateColumn()
     createdAt: string;
