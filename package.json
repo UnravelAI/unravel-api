@@ -13,8 +13,8 @@
       "dev": "nodemon --watch src -e ts --exec npm run dev:start",
       "start": "node .",
       "test": "echo \"Error: no test specified\" && exit 1",
-      "generateMigration": "tsc && typeorm migration:generate -n",
-      "runMigration": "tsc && ts-node ./node_modules/typeorm/cli.js migration:run"
+      "generateMigration": "clean && lint && tsc && typeorm migration:generate -n",
+      "runMigration": "clean && tsc && ts-node ./node_modules/typeorm/cli.js migration:run"
    },
    "keywords": [],
    "author": "",
