@@ -17,6 +17,7 @@ const port = process.env.SERVER_PORT;
 createConnection();
 
 const App = Express();
+App.use(Express.json());
 
 // route handler for the default home page
 App.get("/", (req, res) => {
