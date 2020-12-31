@@ -36,3 +36,10 @@ The script builds the application and generates a new migration.
 
 Executes new migration after generation.\
 The script builds the application and executes the new migrations.
+## API Endpoints (Admin)
+| Endpoint | Method | Request Body | Functionality |
+|--|--| --| -- |
+| <b>User</b>
+| /users | POST | Object[User]  | Create a new user |
+| /users | GET | {}  | Retrieve all users |
+| /users | DELETE/:user_id | {}  | Delete specific user |
