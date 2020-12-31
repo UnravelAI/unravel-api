@@ -1,6 +1,7 @@
 controllers
 entity
 migrations
+helpers
 routes
 migration
 index.js
