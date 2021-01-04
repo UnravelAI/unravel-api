@@ -9,5 +9,10 @@
             false
         ]
     },
+    "linterOptions": {
+        "exclude": [
+            "src/migration/*.ts"
+        ]
+    },
     "rulesDirectory": []
 }

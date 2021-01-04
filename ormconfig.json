@@ -10,7 +10,7 @@
    "entities": [
       "dist/entity/*.js"
    ],
-   "migrationsTableName": "unravel_migrations",
+   "migrationsTableName": "UnravelMigrations",
    "migrations": [
       "dist/migration/*.js"
    ],
