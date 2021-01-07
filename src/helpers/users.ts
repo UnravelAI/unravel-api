@@ -63,9 +63,9 @@ const validateUserFields = (user: User) => {
     if (!isName(user.firstName) || !isName(user.lastName)) {
         errors.push("INVALID_FIRST/LAST_NAME");
     }
-    if (!isDate(user.dob)) {
-        errors.push("INVALID_DOB");
-    }
+    // if (!isDate(user.dob)) {
+    //     errors.push("INVALID_DOB");
+    // }
     if (!isGender(user.gender)) {
         errors.push("INVALID_GENDER");
     }
