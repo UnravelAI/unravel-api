@@ -12,7 +12,7 @@ router.post("/", async (req: Express.Request, res: Express.Response) => {
     try {
         const user: User = req.body;
         // Generate hash and salt from password
-        user.passwordSalt = bcrypt.genSaltSync(10); 
+        user.passwordSalt = bcrypt.genSaltSync(10);
         user.passwordHash = bcrypt.hashSync(req.body.password, user.passwordSalt);
         const validationErrors: string[] = validateUserFields(user);
         const uniqueElements: UniqueUserElements = {
