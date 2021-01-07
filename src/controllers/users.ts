@@ -2,6 +2,7 @@ import Express from "express";
 import { getConnection, Repository } from "typeorm";
 import { User } from "../entity/user";
 import { checkIfExists, validateUserFields, UniqueUserElements } from "../helpers/users"
+import bcrypt from "bcryptjs";
 
 const router = Express.Router();
 
@@ -10,6 +11,9 @@ const router = Express.Router();
 router.post("/", async (req: Express.Request, res: Express.Response) => {
     try {
         const user: User = req.body;
+        // Generate hash and salt from password
+        user.passwordSalt = bcrypt.genSaltSync(10); 
+        user.passwordHash = bcrypt.hashSync(req.body.password, user.passwordSalt);
         const validationErrors: string[] = validateUserFields(user);
         const uniqueElements: UniqueUserElements = {
             email: user.email,
