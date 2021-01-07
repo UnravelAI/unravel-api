@@ -2,6 +2,7 @@ import "reflect-metadata";
 import dotenv from "dotenv";
 import Express from "express";
 import { createConnection } from "typeorm";
+import cors from "cors";
 
 // import routes
 import defaultRoutes from "./routes/default";
@@ -18,6 +19,7 @@ createConnection();
 
 const App = Express();
 App.use(Express.json());
+App.use(cors());
 
 // route handler for the default home page
 App.get("/", (req, res) => {

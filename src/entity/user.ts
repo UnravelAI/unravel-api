@@ -54,7 +54,9 @@ export class User {
     })
     gender: userGender;
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     dob: string;
 
     @Column()
