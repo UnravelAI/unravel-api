@@ -1,5 +1,5 @@
 const EMAIL_REGEX = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-import { userGender } from "../entity/User"
+import { userGender } from "../entity/user"
 
 
 // check if input is valid first/last name
