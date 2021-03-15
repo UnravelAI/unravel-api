@@ -3,9 +3,11 @@ import {
     PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
-    UpdateDateColumn
-
+    UpdateDateColumn,
+    OneToMany
 } from "typeorm";
+
+import{Material} from "../entity/material";
 
 export enum userGender {
     MALE = "male",
@@ -70,4 +72,8 @@ export class User {
 
     @UpdateDateColumn()
     updatedAt: string;
+
+    @OneToMany(() => Material, material => material.user)
+    materials: Material[];
+
 }
