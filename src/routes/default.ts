@@ -12,7 +12,7 @@ import Login from "../controllers/login";
 
 
 // route controllers
-router.use("/users", Users);
+router.use("/users", authenticateUser, Users);
 router.use("/login", Login);
 
 
