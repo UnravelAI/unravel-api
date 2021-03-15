@@ -7,7 +7,7 @@ import {
     ManyToOne
 
 } from "typeorm";
-import {User} from "../entity/user";
+import { User } from "../entity/user";
 
 @Entity("Materials")
 export class Material {
@@ -20,6 +20,12 @@ export class Material {
 
     @Column()
     description: string;
+
+    @CreateDateColumn()
+    createdAt: string;
+
+    @UpdateDateColumn()
+    updatedAt: string;
 
     @ManyToOne(() => User, user => user.materials)
     user: User;
