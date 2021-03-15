@@ -7,7 +7,7 @@ import {
     OneToMany
 } from "typeorm";
 
-import{Material} from "../entity/material";
+import { Material } from "../entity/material";
 
 export enum userGender {
     MALE = "male",
