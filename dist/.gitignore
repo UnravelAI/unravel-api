@@ -6,3 +6,4 @@ routes
 migration
 index.js
 index.js.map
+middleware

@@ -76,30 +76,5 @@ router.delete("/:id", async (req: Express.Request, res: Express.Response) => {
     }
 });
 
-// login user
-router.post("/login", async (req: Express.Request, res: Express.Response) => {
-    try {
-        const { email, password } = req.body;
-        const user = await getConnection().getRepository(User).findOne({ email });
-        if (!user) {
-            res.status(401).json({
-                message: "Invalid Credentials"
-            });
-        }
-        const isCorrectPassword = bcrypt.compareSync(password, user.passwordHash);
-        if (!isCorrectPassword) {
-            res.status(401).json({
-                message: "Invalid Credentials"
-            });
-        }
-        res.status(200).json({
-            message: "Logged In Succesfully."
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: error.message
-        });
-    }
-});
 
 export default router;
