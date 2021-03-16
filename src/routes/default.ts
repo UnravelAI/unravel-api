@@ -1,10 +1,6 @@
 import Express from "express";
 const router = Express.Router();
 
-
-// middleware
-import authenticateUser from "../middleware/authenticateUser"
-
 // import controllers
 import Users from "../controllers/users";
 import Login from "../controllers/login";
@@ -12,7 +8,7 @@ import Login from "../controllers/login";
 
 
 // route controllers
-router.use("/users", authenticateUser, Users);
+router.use("/users", Users);
 router.use("/login", Login);
 
 
