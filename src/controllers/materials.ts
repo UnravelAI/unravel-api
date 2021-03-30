@@ -4,6 +4,8 @@ import { getConnection, Repository } from "typeorm";
 import { Material } from "../entity/material";
 import { User } from "../entity/user";
 import authenticateUser from "../middleware/authenticateUser";
+import videosController from "./videos";
+
 /**
  *
  * IMPORT VIDEO ENDPOINTS
@@ -12,10 +14,9 @@ import authenticateUser from "../middleware/authenticateUser";
 
 const router = Express.Router();
 
-// routing video
-// router.use("/video/ /* video endpoint name*/ ", authenticateUser, /* video endpoint */);
-// router.use("/video/ /* video endpoint name*/ ", authenticateUser, /* video endpoint */);
-// router.use("/video/ /* video endpoint name*/ ", authenticateUser, /* video endpoint */);
+// videos endpoint
+
+router.use("/video", videosController);
 
 router.post("/", async (req: Request, res: Response) => {
     try {
