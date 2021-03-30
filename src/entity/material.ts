@@ -4,10 +4,12 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
-    ManyToOne
-
+    ManyToOne,
+    OneToOne,
+    JoinColumn
 } from "typeorm";
 import { User } from "../entity/user";
+import { Video } from "../entity/video";
 
 @Entity("Materials")
 export class Material {
@@ -29,6 +31,10 @@ export class Material {
 
     @ManyToOne(() => User, user => user.materials)
     user: User;
+
+    @OneToOne(() => Video)
+    @JoinColumn()
+    video: Video;
 
 }
 
