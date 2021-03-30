@@ -3,8 +3,19 @@ import { Request, Response } from "express";
 import { getConnection, Repository } from "typeorm";
 import { Material } from "../entity/material";
 import { User } from "../entity/user";
+import authenticateUser from "../middleware/authenticateUser";
+/**
+ *
+ * IMPORT VIDEO ENDPOINTS
+ *
+ */
 
 const router = Express.Router();
+
+// routing video
+// router.use("/video/ /* video endpoint name*/ ", authenticateUser, /* video endpoint */);
+// router.use("/video/ /* video endpoint name*/ ", authenticateUser, /* video endpoint */);
+// router.use("/video/ /* video endpoint name*/ ", authenticateUser, /* video endpoint */);
 
 router.post("/", async (req: Request, res: Response) => {
     try {
