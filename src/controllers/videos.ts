@@ -11,7 +11,9 @@ const router = Express.Router();
 
 */
 
-
+router.post("/upload", async (req: Request, res: Response) => {
+    res.send("hello");
+});
 
 /*
 
