@@ -3,21 +3,14 @@ import { Request, Response } from "express";
 import { getConnection, Repository } from "typeorm";
 import { Material } from "../entity/material";
 import { User } from "../entity/user";
-import authenticateUser from "../middleware/authenticateUser";
 import videosController from "./videos";
-
-/**
- *
- * IMPORT VIDEO ENDPOINTS
- *
- */
 
 const router = Express.Router();
 
-// videos endpoint
-
+// routes
 router.use("/video", videosController);
 
+// submit material
 router.post("/", async (req: Request, res: Response) => {
     try {
         const material: Material = req.body;
@@ -51,6 +44,7 @@ router.post("/", async (req: Request, res: Response) => {
     }
 });
 
+// fetch all materials
 router.get("/", async (req: Request, res: Response) => {
     try {
         const materialUser: User = new User();
@@ -58,10 +52,40 @@ router.get("/", async (req: Request, res: Response) => {
 
         // retrieve user's materials
         const materialRepository: Repository<Material> = await getConnection().getRepository(Material);
-        const materials = await (await materialRepository.find({ where: { user: materialUser } })).reverse();
+        const materials = await materialRepository.find({
+            where: { user: materialUser },
+            relations: ["video"],
+        });
         return res.status(200).json({
             message: "Materials Retreived successfully",
             data: materials,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message,
+        })
+    }
+});
+
+// fetch specific material
+router.get("/:id", async (req: Request, res: Response) => {
+    try {
+        // retrieve single material
+        const materialId = req.params.id;
+
+        // retrieve material
+        const materialRepository: Repository<Material> = await getConnection().getRepository(Material);
+        const material = await materialRepository.findOne(materialId, {
+            relations: ["video"],
+        });
+        if (!material) {
+            return res.status(404).json({
+                message: "Error: material not found",
+            });
+        }
+        return res.status(200).json({
+            message: "materials Retreived successfully",
+            data: material,
         });
     } catch (error) {
         return res.status(500).json({
