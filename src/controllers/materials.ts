@@ -52,10 +52,10 @@ router.get("/", async (req: Request, res: Response) => {
 
         // retrieve user's materials
         const materialRepository: Repository<Material> = await getConnection().getRepository(Material);
-        const materials = await (await materialRepository.find({
+        const materials = await materialRepository.find({
             where: { user: materialUser },
             relations: ["video"],
-        })).reverse();
+        });
         return res.status(200).json({
             message: "Materials Retreived successfully",
             data: materials,
