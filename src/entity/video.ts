@@ -14,22 +14,35 @@ export class Video {
     @PrimaryGeneratedColumn('uuid')
     id: number;
 
-    @Column()
-    filename: string;
+    @Column({
+        nullable: true,
+    })
+    fileName: string;
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     duration: string;
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     streamingUrl: string;
 
-    @Column()
+    @Column({
+        default: false,
+    })
     jobCompleted: boolean;
 
-    @Column()
+    @Column({
+        default: 0,
+    })
     views: number;
 
-    @Column('json')
+    @Column({
+        type: 'json',
+        nullable: true,
+    })
     transcription: any;
 
     @CreateDateColumn()
