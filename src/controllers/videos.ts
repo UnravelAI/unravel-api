@@ -15,8 +15,8 @@ const router = Express.Router();
 */
 
 const s3 = new AWS.S3({
-    secretAccessKey: "Z/txXFQaM2k0cLiuONLx9l6P9v2MzvSYVaE+0K/1",
-    accessKeyId: "AKIAV655IKRQL7DXMTPX",
+    secretAccessKey: process.env.S3_ACCESS_KEY,
+    accessKeyId: process.env.S3_ACCESS_SECRET,
     region: 'us-east-1',
 });
 
