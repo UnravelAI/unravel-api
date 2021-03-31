@@ -13,15 +13,20 @@ const router = Express.Router();
 */
 
 
-// Set video upload job status
+// set video job status
 router.put("/jobStatus", async (req: Request, res: Response) => {
     try {
         const fileName: string = req.body.fileName;
 
         // update jobStatus for the specified file
         const videoRepository: Repository<Video> = await getConnection().getRepository(Video);
-        await videoRepository.update({ fileName }, { jobCompleted: true });
-
+        const updateResult = await videoRepository.update({ fileName }, { jobCompleted: true });
+        console.log(updateResult.affected);
+        if (!updateResult.affected) {
+            return res.status(404).json({
+                message: "Error: video not found",
+            });
+        }
         return res.status(200).json({
             message: `jobStatus updated successfully for video: ${fileName}`,
         });

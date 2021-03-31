@@ -78,6 +78,11 @@ router.get("/:id", async (req: Request, res: Response) => {
         const material = await materialRepository.findOne(materialId, {
             relations: ["video"],
         });
+        if (!material) {
+            return res.status(404).json({
+                message: "Error: material not found",
+            });
+        }
         return res.status(200).json({
             message: "materials Retreived successfully",
             data: material,
