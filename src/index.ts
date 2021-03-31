@@ -6,6 +6,7 @@ import cors from "cors";
 
 // import routes
 import defaultRoutes from "./routes/default";
+import cloudRoutes from "./routes/cloud";
 
 // initialize configuration
 dotenv.config();
@@ -28,7 +29,7 @@ App.get("/", (req, res) => {
 
 // use routes
 App.use("/", defaultRoutes);
-
+App.use("/", cloudRoutes);
 // start the Express server
 App.listen(port, () => {
     // tslint:disable-next-line:no-console
