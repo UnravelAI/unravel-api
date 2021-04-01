@@ -13,7 +13,7 @@ dotenv.config();
 
 // port is now available to the Node.js runtime
 // as if it were an environment variable
-const port = process.env.SERVER_PORT;
+const port = process.env.PORT;
 
 const getOptions = async () => {
     let connectionOptions: ConnectionOptions;
