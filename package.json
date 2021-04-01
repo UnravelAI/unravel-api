@@ -4,7 +4,7 @@
    "description": "",
    "main": "dist/index.js",
    "scripts": {
-      "postinstall": "rimraf dist/* && tsc && ts-node ./node_modules/typeorm/cli.js migration:run",
+      "postinstall": "tsc",
       "clean": "rimraf dist/*",
       "copy-assets": "ts-node tools/copyAssets",
       "lint": "tslint -c tslint.json -p tsconfig.json --fix",
