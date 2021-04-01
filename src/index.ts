@@ -48,7 +48,8 @@ const getOptions = async () => {
 
 const connect2Database = async (): Promise<void> => {
     const typeormconfig = await getOptions();
-    await createConnection(typeormconfig);
+    const connection = await createConnection(typeormconfig);
+    await connection.runMigrations();
 };
 
 connect2Database().then(async () => {
