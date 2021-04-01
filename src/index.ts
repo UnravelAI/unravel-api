@@ -25,6 +25,14 @@ const getOptions = async () => {
             ssl: true,
         },
         entities: ['dist/entity/*.*'],
+        migrationsTableName: "UnravelMigrations",
+        migrations: ["dist/migration/*.js"],
+        subscribers: ["dist/subscribers/*.js"],
+        cli: {
+            entitiesDir: "src/entity",
+            migrationsDir: "src/migration",
+            subscribersDir: "src/subscriber"
+        }
     };
     if (process.env.DATABASE_URL) {
         Object.assign(connectionOptions, { url: process.env.DATABASE_URL });
