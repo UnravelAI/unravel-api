@@ -48,8 +48,7 @@ const getOptions = async () => {
 
 const connect2Database = async (): Promise<void> => {
     const typeormconfig = await getOptions();
-    const connection = await createConnection(typeormconfig);
-    await connection.runMigrations();
+    await createConnection(typeormconfig);
 };
 
 connect2Database().then(async () => {
@@ -72,7 +71,7 @@ App.get("/", (req, res) => {
 App.use("/", defaultRoutes);
 App.use("/", cloudRoutes);
 // start the Express server
-App.listen(port, () => {
+App.listen(process.env.PORT || port, () => {
     // tslint:disable-next-line:no-console
     console.log(`server started at http://localhost:${port}`);
 });
