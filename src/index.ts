@@ -15,6 +15,7 @@ dotenv.config();
 // as if it were an environment variable
 const port = process.env.PORT;
 
+// get db options according to environment 
 const getOptions = async () => {
     let connectionOptions: ConnectionOptions;
     connectionOptions = {
@@ -46,11 +47,11 @@ const getOptions = async () => {
     return connectionOptions;
 };
 
+// connect to database
 const connect2Database = async (): Promise<void> => {
     const typeormconfig = await getOptions();
     await createConnection(typeormconfig);
 };
-
 connect2Database().then(async () => {
     console.log('Connected to database');
 });
@@ -71,7 +72,7 @@ App.get("/", (req, res) => {
 App.use("/", defaultRoutes);
 App.use("/", cloudRoutes);
 // start the Express server
-App.listen(process.env.PORT || port, () => {
+App.listen(port, () => {
     // tslint:disable-next-line:no-console
     console.log(`server started at http://localhost:${port}`);
 });
