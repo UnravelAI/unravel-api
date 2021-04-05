@@ -13,8 +13,9 @@ dotenv.config();
 
 // port is now available to the Node.js runtime
 // as if it were an environment variable
-const port = process.env.SERVER_PORT;
+const port = process.env.PORT;
 
+// get db options according to environment
 const getOptions = async () => {
     let connectionOptions: ConnectionOptions;
     connectionOptions = {
@@ -25,6 +26,14 @@ const getOptions = async () => {
             ssl: true,
         },
         entities: ['dist/entity/*.*'],
+        migrationsTableName: "UnravelMigrations",
+        migrations: ["dist/migration/*.js"],
+        subscribers: ["dist/subscribers/*.js"],
+        cli: {
+            entitiesDir: "src/entity",
+            migrationsDir: "src/migration",
+            subscribersDir: "src/subscriber"
+        }
     };
     if (process.env.DATABASE_URL) {
         Object.assign(connectionOptions, { url: process.env.DATABASE_URL });
@@ -38,12 +47,11 @@ const getOptions = async () => {
     return connectionOptions;
 };
 
+// connect to database
 const connect2Database = async (): Promise<void> => {
     const typeormconfig = await getOptions();
-    const connection = await createConnection(typeormconfig);
-    await connection.runMigrations();
+    await createConnection(typeormconfig);
 };
-
 connect2Database().then(async () => {
     console.log('Connected to database');
 });
@@ -66,5 +74,5 @@ App.use("/", cloudRoutes);
 // start the Express server
 App.listen(port, () => {
     // tslint:disable-next-line:no-console
-    console.log(`server started at http://localhost:${port}`);
+    console.log(`server started at port: ${port}`);
 });

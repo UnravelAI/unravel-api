@@ -4,6 +4,7 @@
    "description": "",
    "main": "dist/index.js",
    "scripts": {
+      "postinstall": "tsc",
       "clean": "rimraf dist/*",
       "copy-assets": "ts-node tools/copyAssets",
       "lint": "tslint -c tslint.json -p tsconfig.json --fix",
@@ -35,7 +36,9 @@
       "multer-s3": "^2.9.0",
       "pg": "^8.4.0",
       "reflect-metadata": "^0.1.10",
-      "typeorm": "^0.2.29"
+      "typeorm": "^0.2.29",
+      "ts-node": "^9.1.1",
+      "typescript": "^4.1.2"
    },
    "devDependencies": {
       "@types/bcryptjs": "^2.4.2",
