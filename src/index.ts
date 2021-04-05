@@ -15,7 +15,7 @@ dotenv.config();
 // as if it were an environment variable
 const port = process.env.PORT;
 
-// get db options according to environment 
+// get db options according to environment
 const getOptions = async () => {
     let connectionOptions: ConnectionOptions;
     connectionOptions = {
@@ -74,5 +74,5 @@ App.use("/", cloudRoutes);
 // start the Express server
 App.listen(port, () => {
     // tslint:disable-next-line:no-console
-    console.log(`server started at http://localhost:${port}`);
+    console.log(`server started at port: ${port}`);
 });
