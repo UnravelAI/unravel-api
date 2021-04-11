@@ -16,9 +16,17 @@ router.put("/generateStreamingURL", async (req: Request, res: Response) => {
         const videoFileName: string = req.body.fileName;
         const guid: string = req.body.guid;
         const fileNameWExtension = videoFileName.substring(0, videoFileName.lastIndexOf('.'));
-        const streamableURL: string = "https://d10n7efzl01lxo.cloudfront.net/" + guid + "/" + fileNameWExtension + ".m3u8";
+        const streamableURL: string = "https://d10n7efzl01lxo.cloudfront.net/" + guid + "/AppleHLS1/" + fileNameWExtension + ".m3u8";
+        const audioURL: string = "https://d10n7efzl01lxo.cloudfront.net/" + guid + "/FileGroup/" + fileNameWExtension + ".wav";
         console.log(streamableURL);
-        const updateResult = await videoRepository.update({ fileName: videoFileName }, { streamingUrl: streamableURL });
+        console.log(audioURL);
+        const updateResult = await videoRepository.update(
+            { fileName: videoFileName },
+            {
+                streamingUrl: streamableURL,
+                audioUrl: audioURL,
+            },
+        );
         if (!updateResult.affected) {
             return res.status(404).json({
                 message: "Video not found"
@@ -26,7 +34,8 @@ router.put("/generateStreamingURL", async (req: Request, res: Response) => {
         }
         return res.status(200).json({
             message: "video streamableURL updated successfully",
-            url: streamableURL,
+            streamableURL,
+            audioURL,
         })
     }
     catch (error) {
