@@ -7,6 +7,9 @@
    "database": "d7946rctga429u",
    "synchronize": false,
    "logging": false,
+   "extra": {
+      "ssl": true
+   },
    "entities": [
       "dist/entity/*.js"
    ],
