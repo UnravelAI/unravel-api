@@ -30,6 +30,11 @@ export class Video {
     streamingUrl: string;
 
     @Column({
+        nullable: true,
+    })
+    audioUrl: string;
+
+    @Column({
         default: false,
     })
     jobCompleted: boolean;
