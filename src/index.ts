@@ -23,7 +23,7 @@ const getOptions = async () => {
         synchronize: false,
         logging: false,
         extra: {
-            ssl: true,
+            ssl: false,
         },
         entities: ['dist/entity/*.*'],
         migrationsTableName: "UnravelMigrations",
