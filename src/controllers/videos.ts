@@ -27,7 +27,7 @@ const videoUpload = Multer({
             cb(null, { fieldname: file.fieldname });
         },
         key: (req, file, cb) => {
-            cb(null, Date.now().toString() + "-" + file.originalname);
+            cb(null, "assets-01/" + Date.now().toString() + "-" + file.originalname);
         }
     }),
 });
