@@ -36,7 +36,7 @@ router.post("/upload", videoUpload.single("video"), async (req: Request, res: Re
     try {
         const fileName = (req.file as any).key;
         const videosRepository = getConnection().getRepository(Video);
-        const newVideo = await videosRepository.save({ fileName });
+        const newVideo = await videosRepository.save({ fileName: fileName.split("/")[1] });
         res.status(200).json({
             message: "File uploaded succesfully",
             video: newVideo
