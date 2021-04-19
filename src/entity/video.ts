@@ -40,6 +40,16 @@ export class Video {
     jobCompleted: boolean;
 
     @Column({
+        nullable: true,
+    })
+    transcriptionUrl: string;
+
+    @Column({
+        default: false,
+    })
+    transcriptionCompleted: boolean;
+
+    @Column({
         default: 0,
     })
     views: number;
