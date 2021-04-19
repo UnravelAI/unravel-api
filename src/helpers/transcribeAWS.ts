@@ -1,49 +1,35 @@
-import speech from '@google-cloud/speech'
-const client = new speech.SpeechClient();
+// Import the required AWS SDK clients and commands for Node.js
+import {
+    TranscribeClient,
+    StartTranscriptionJobCommand,
+} from "@aws-sdk/client-transcribe";
 
-import { TranscribeClient, } from "@aws-sdk/client-transcribe";
-// const client = new TranscribeClient({ region: "REGION" });
-const params = {
-    /** input parameters */
-};
-// const command = new CreateLanguageModelCommand(params);
+// Set the AWS Region
+const REGION = "us-east-1"; // For example, "us-east-1"
 
-
-
-
-
-const transcribe = async (audio: any, config: any) => {
+const transcribe = async (audioURL: string, fileName: string) => {
     try {
-        console.log("transcribing...");
-        const request = {
-            audio,
-            config,
-        };
-        // Detects speech in the audio file. This creates a recognition job that you
-        // can wait for now, or get its result later.
-        const [operation] = await client.longRunningRecognize(request);
+        // Set the parameters
+        const params = {
+            TranscriptionJobName: fileName,
+            LanguageCode: "en-US",
+            MediaSampleRateHertz: 22050,
+            MediaFormat: "mp3",
+            Media: {
+                MediaFileUri: audioURL
+            },
+            OutputBucketName: "unravel-foundation-destination920a3c57-lzvld8jwflhj"
+        }
+        console.log(params);
 
-        // Get a Promise representation of the final result of the job
-        const [response] = await operation.promise();
-        response.results.forEach(result => {
-            console.log(`Transcription: ${result.alternatives[0].transcript}`);
-            result.alternatives[0].words.forEach(wordInfo => {
-                // NOTE: If you have a time offset exceeding 2^32 seconds, use the
-                // wordInfo.{x}Time.seconds.high to calculate seconds.
-                const startSecs =
-                    `${wordInfo.startTime.seconds}` +
-                    '.' +
-                    wordInfo.startTime.nanos / 100000000;
-                const endSecs =
-                    `${wordInfo.endTime.seconds}` +
-                    '.' +
-                    wordInfo.endTime.nanos / 100000000;
-                console.log(`Word: ${wordInfo.word}`);
-                console.log(`\t ${startSecs} secs - ${endSecs} secs`);
-            });
-        });
+        console.log("transcribing...");
+        // Create an Amazon Transcribe service client object
+        const client = new TranscribeClient({ region: REGION });
+        const data = await client.send(new StartTranscriptionJobCommand(params));
+        console.log("Transcibtion Success - put", data);
     }
     catch (error) {
+        console.log("Error", error);
         throw {
             type: "STT_ERROR",
             error,
@@ -52,4 +38,7 @@ const transcribe = async (audio: any, config: any) => {
 }
 
 
-export default transcribe;
+
+export {
+    transcribe,
+};
