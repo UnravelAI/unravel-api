@@ -4,7 +4,7 @@ import { getConnection, Repository } from "typeorm";
 import { Video } from "../../entity/video";
 const router = Express.Router();
 import axios from "axios";
-import transcribe from "../../helpers/transcribe";
+import { transcribe } from "../../helpers/transcribeAWS";
 
 /*
 
@@ -18,7 +18,7 @@ router.put("/generateStreamingURL", async (req: Request, res: Response) => {
         const guid: string = req.body.guid;
         const fileNameWExtension = videoFileName.substring(0, videoFileName.lastIndexOf('.'));
         const streamableURL: string = "https://d10n7efzl01lxo.cloudfront.net/" + guid + "/AppleHLS1/" + fileNameWExtension + ".m3u8";
-        const audioURL: string = "https://d10n7efzl01lxo.cloudfront.net/" + guid + "/FileGroup1/" + fileNameWExtension + ".wav";
+        const audioURL: string = "s3://unravel-foundation-destination920a3c57-lzvld8jwflhj/" + guid + "/FileGroup1/" + fileNameWExtension + ".mp3";
         console.log(streamableURL);
         console.log(audioURL);
         const updateResult = await videoRepository.update(
@@ -46,7 +46,11 @@ router.put("/generateStreamingURL", async (req: Request, res: Response) => {
     }
 });
 
-// set video job status
+/*
+
+    set video job status and start transcribing
+
+*/
 router.put("/jobStatus", async (req: Request, res: Response) => {
     try {
         const fileName: string = req.body.fileName;
@@ -59,28 +63,13 @@ router.put("/jobStatus", async (req: Request, res: Response) => {
                 message: "Error: video/audio not found",
             });
         }
-        const uri = video.audioUrl;
-        console.log("Fetching audio file from: ", uri);
-        const audioFile = await axios.get(uri, { responseType: 'arraybuffer' });
-        const audioBytes: string = audioFile.data.toString('base64');
-        // stt: request body
-        const audio = {
-            content: audioBytes,
-        }
-        // stt: request config
-        const config = {
-            encoding: 'LINEAR16',
-            sampleRateHertz: 16000,
-            languageCode: 'en-US',
-            model: 'video', // For better accuracy specify data model: video, phone-call...
-            enableWordTimeOffsets: true, // allow word specific time offset
-        };
-        console.log("Audio bytes captured...");
-        await transcribe(audio, config);
-
+        // start transcribing video
+        // const audioURL = video.audioUrl;
+        const audioURL = "s3://unravel-foundation-destination920a3c57-lzvld8jwflhj/1b9d2180-e3c3-488b-9a6a-8bc37b80940c/FileGroup1/1618776572363-KhalidTest01audio.mp3"
+        const transcribeJobName = fileName.substring(0, fileName.lastIndexOf('.')); // fileName without extension
+        await transcribe(audioURL, transcribeJobName);
         // update jobStatus for the specified file
         const updateResult = await videoRepository.update({ fileName }, { jobCompleted: true });
-        console.log(updateResult.affected);
         if (!updateResult.affected) {
             return res.status(404).json({
                 message: "Error: video not found",
