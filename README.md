@@ -58,6 +58,6 @@ The script builds the application and executes the new migrations.
 | /cloud/video/jobStatus | PUT | {fileName} | Notify that video conversion job is completed
 | /cloud/video/jobStatus/transcribe | PUT | {transcribeJobName} | Notify that transcription job is completed
 | <b>Materials</b>
+| /users/materials/ | POST | Object[Material] | Create new material
 | /users/materials/ | GET | {} | Get all materials
 | /users/materials/ | GET/:user_id | {} | Get specific user materials
-| /users/materials/ | POST | 
