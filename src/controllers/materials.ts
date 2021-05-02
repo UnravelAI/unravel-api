@@ -4,11 +4,15 @@ import { getConnection, Repository } from "typeorm";
 import { Material } from "../entity/material";
 import { User } from "../entity/user";
 import videosController from "./videos";
+import documentsController from "./documents";
 
-const router = Express.Router();
+const router = Express.Router({
+    mergeParams: true, // retrieve params from previous middle wares
+});
 
 // routes
-router.use("/video", videosController);
+router.use("/:material_id/video", videosController);
+router.use("/:material_id/document", documentsController);
 
 // submit material
 router.post("/", async (req: Request, res: Response) => {
@@ -54,7 +58,7 @@ router.get("/", async (req: Request, res: Response) => {
         const materialRepository: Repository<Material> = await getConnection().getRepository(Material);
         const materials = await materialRepository.find({
             where: { user: materialUser },
-            relations: ["video"],
+            relations: ["video", "document"],
         });
         return res.status(200).json({
             message: "Materials Retreived successfully",
@@ -76,7 +80,7 @@ router.get("/:id", async (req: Request, res: Response) => {
         // retrieve material
         const materialRepository: Repository<Material> = await getConnection().getRepository(Material);
         const material = await materialRepository.findOne(materialId, {
-            relations: ["video"],
+            relations: ["video", "document"],
         });
         if (!material) {
             return res.status(404).json({

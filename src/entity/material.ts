@@ -6,10 +6,13 @@ import {
     UpdateDateColumn,
     ManyToOne,
     OneToOne,
-    JoinColumn
+    JoinColumn,
+    OneToMany,
 } from "typeorm";
-import { User } from "../entity/user";
-import { Video } from "../entity/video";
+import { User } from "./user";
+import { Video } from "./video";
+import { Document } from "./document";
+
 
 @Entity("Materials")
 export class Material {
@@ -36,5 +39,7 @@ export class Material {
     @JoinColumn()
     video: Video;
 
+    @OneToMany(() => Document, document => document.material)
+    document: Document[];
 }
 
