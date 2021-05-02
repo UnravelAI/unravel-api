@@ -4,11 +4,13 @@ import { getConnection, Repository } from "typeorm";
 import { Material } from "../entity/material";
 import { User } from "../entity/user";
 import videosController from "./videos";
+import documentsController from "./documents";
 
 const router = Express.Router();
 
 // routes
 router.use("/video", videosController);
+router.use("/document", documentsController);
 
 // submit material
 router.post("/", async (req: Request, res: Response) => {
