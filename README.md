@@ -61,6 +61,7 @@ The script builds the application and executes the new migrations.
 | /users/materials/ | POST | Object[Material] | Create new material
 | /users/materials/ | GET | {} | Get all materials
 | /users/materials/ | GET/:user_id | {} | Get specific user materials
+| /users/materials/:material_id/video | POST | multipart/form-data[video] | Upload a video
 | /users/materials/:material_id/document | POST | multipart/form-data[documentName] | Upload a document
 
 
