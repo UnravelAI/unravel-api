@@ -58,7 +58,7 @@ router.get("/", async (req: Request, res: Response) => {
         const materialRepository: Repository<Material> = await getConnection().getRepository(Material);
         const materials = await materialRepository.find({
             where: { user: materialUser },
-            relations: ["video"],
+            relations: ["video", "document"],
         });
         return res.status(200).json({
             message: "Materials Retreived successfully",
@@ -80,7 +80,7 @@ router.get("/:id", async (req: Request, res: Response) => {
         // retrieve material
         const materialRepository: Repository<Material> = await getConnection().getRepository(Material);
         const material = await materialRepository.findOne(materialId, {
-            relations: ["video"],
+            relations: ["video", "document"],
         });
         if (!material) {
             return res.status(404).json({
