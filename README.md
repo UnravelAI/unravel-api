@@ -51,3 +51,13 @@ The script builds the application and executes the new migrations.
 | /users | POST | Object[User]  | Create a new user |
 | /users | GET | {}  | Retrieve all users |
 | /users | DELETE/:user_id | {}  | Delete specific user |
+| <b>Login</b>
+| /login | POST | {email, password} | login |
+| <b>Cloud: used from AWS</b>
+| /cloud/video/generateStreamingURL | PUT | {filename, guid} | Generate new streamble url and audio url
+| /cloud/video/jobStatus | PUT | {fileName} | Notify that video conversion job is completed
+| /cloud/video/jobStatus/transcribe | PUT | {transcribeJobName} | Notify that transcription job is completed
+| <b>Materials</b>
+| /users/materials/ | GET | {} | Get all materials
+| /users/materials/ | GET/:user_id | {} | Get specific user materials
+| /users/materials/ | POST | 
