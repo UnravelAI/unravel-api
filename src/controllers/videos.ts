@@ -1,9 +1,9 @@
 import Express from "express";
 import { Request, Response } from "express";
-import { getConnection, Repository } from "typeorm";
+import { getConnection } from "typeorm";
 import { Video } from "../entity/video";
 import { Material } from "../entity/material";
-import videoUpload from "../helpers/fileUpload";
+import { videoUpload } from "../helpers/fileUpload";
 
 const router = Express.Router();
 
@@ -12,7 +12,7 @@ const router = Express.Router();
     Upload video endpoint
 
 */
-router.post("/material/:id/upload", videoUpload.single("video"), async (req: Request, res: Response) => {
+router.post("/", videoUpload.single("video"), async (req: Request, res: Response) => {
     try {
         const fileName = (req.file as any).key;
         const videosRepository = getConnection().getRepository(Video);
@@ -21,7 +21,7 @@ router.post("/material/:id/upload", videoUpload.single("video"), async (req: Req
 
         const materialsRepository = getConnection().getRepository(Material);
 
-        const material = await materialsRepository.findOne(req.params.id);
+        const material = await materialsRepository.findOne(req.params.material_id);
 
         material.video = newVideo;
 
