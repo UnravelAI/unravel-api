@@ -6,7 +6,7 @@ const s3 = new AWS.S3({
     region: 'us-east-1',
 });
 
-const fileUpload = Multer({
+const videoUpload = Multer({
     storage: MulterS3({
         s3,
         acl: 'public-read',
@@ -20,4 +20,21 @@ const fileUpload = Multer({
     }),
 });
 
-export default fileUpload;
+const documentUpload = Multer({
+    storage: MulterS3({
+        s3,
+        acl: 'public-read',
+        bucket: 'unravel-foundation-destination920a3c57-lzvld8jwflhj',
+        metadata: (req, file, cb) => {
+            cb(null, { fieldname: file.fieldname });
+        },
+        key: (req, file, cb) => {
+            cb(null, "Documents/" + Date.now().toString() + "-" + file.originalname);
+        }
+    }),
+});
+
+export {
+    videoUpload,
+    documentUpload,
+}
