@@ -1,10 +1,10 @@
 {
    "type": "postgres",
-   "host": "localhost",
+   "host": "ec2-52-50-171-4.eu-west-1.compute.amazonaws.com",
    "port": 5432,
-   "username": "",
-   "password": "",
-   "database": "unravel",
+   "username": "itjvbxbbbtefxo",
+   "password": "eb6b48b7e59d16b11d7fd1dabb7b936459b0a20cc16468f47b1263ee2aa60648",
+   "database": "d7946rctga429u",
    "synchronize": false,
    "logging": false,
    "entities": [
@@ -21,5 +21,8 @@
       "entitiesDir": "src/entity",
       "migrationsDir": "src/migration",
       "subscribersDir": "src/subscriber"
+   },
+   "extra": {
+      "ssl": true
    }
 }
