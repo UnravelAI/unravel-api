@@ -6,9 +6,7 @@ import { User } from "../entity/user";
 import videosController from "./videos";
 import documentsController from "./documents";
 
-const router = Express.Router({
-    mergeParams: true, // retrieve params from previous middle wares
-});
+const router = Express.Router();
 
 // routes
 router.use("/:material_id/video", videosController);
