@@ -5,8 +5,9 @@ import { Document } from "../entity/document";
 import { Material } from "../entity/material";
 import { documentUpload } from "../helpers/fileUpload";
 
-const router = Express.Router();
-
+const router = Express.Router({
+    mergeParams: true, // retrieve params from previous middle wares
+});
 /*
 
     Upload document endpoint
@@ -17,10 +18,9 @@ router.post("/", documentUpload.single("documentName"), async (req: Request, res
         const fileName = (req.file as any).key;
         const fileUrl: string = `https://d10n7efzl01lxo.cloudfront.net/${fileName}`;
         const materialId: string = req.params.material_id;
-
-        const materialsRepository = getConnection().getRepository(Material);
         const documentRepository = getConnection().getRepository(Document);
-        const material = await materialsRepository.findOne(materialId);
+        const material = new Material();
+        material.id = Number(materialId);
 
         const newDocument = await documentRepository.save({
             fileName: fileName.split("/")[1],
@@ -32,7 +32,8 @@ router.post("/", documentUpload.single("documentName"), async (req: Request, res
         });
     } catch (error) {
         res.status(500).json({
-            message: "An unexpected error occured"
+            message: "An unexpected error occured",
+            error,
         });
     }
 });
