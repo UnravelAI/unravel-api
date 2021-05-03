@@ -4,9 +4,14 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
-    ManyToOne
-
 } from "typeorm";
+
+export enum videoStatus {
+    PROCESSING = "processing",
+    EDITABLE = "editable",
+    EDITING = "editing",
+    PUBLISHED = "published",
+}
 
 @Entity("Videos")
 export class Video {
@@ -35,19 +40,16 @@ export class Video {
     audioUrl: string;
 
     @Column({
-        default: false,
-    })
-    jobCompleted: boolean;
-
-    @Column({
         nullable: true,
     })
     transcriptionUrl: string;
 
     @Column({
-        default: false,
+        type: "enum",
+        enum: videoStatus,
+        default: "processing",
     })
-    transcriptionCompleted: boolean;
+    status: videoStatus;
 
     @Column({
         default: 0,
