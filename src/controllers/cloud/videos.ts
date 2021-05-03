@@ -125,4 +125,33 @@ router.put("/status/editable", async (req: Request, res: Response) => {
     }
 });
 
+/*
+
+    set status to published
+
+*/
+router.put("/status/published", async (req: Request, res: Response) => {
+    try {
+        const fileName: string = req.body.fileName;
+        const videoRepository: Repository<Video> = await getConnection().getRepository(Video);
+        // update video status to Published
+        const updateResult = await videoRepository.update({ fileName }, {
+            status: videoStatus.PUBLISHED,
+        });
+        if (!updateResult.affected) {
+            return res.status(404).json({
+                message: "Error: video not found",
+            });
+        }
+        return res.status(200).json({
+            message: `Video status updated successfully for video: ${fileName}`,
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: error.message,
+        });
+    }
+});
+
 export default router;
