@@ -12,6 +12,7 @@ import {
 import { User } from "./user";
 import { Video } from "./video";
 import { Document } from "./document";
+import { Course } from "./course";
 
 
 @Entity("Materials")
@@ -38,6 +39,10 @@ export class Material {
     @OneToOne(() => Video)
     @JoinColumn()
     video: Video;
+
+    @ManyToOne(() => Course, course => course.materials)
+    @JoinColumn()
+    course: Course;
 
     @OneToMany(() => Document, document => document.material)
     document: Document[];
