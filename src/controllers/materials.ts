@@ -3,11 +3,13 @@ import { Request, Response } from "express";
 import { getConnection, Repository } from "typeorm";
 import { Material } from "../entity/material";
 import { User } from "../entity/user";
+import { Course } from "../entity/course";
 import videosController from "./videos";
 import documentsController from "./documents";
 
-const router = Express.Router();
-
+const router = Express.Router({
+    mergeParams: true, // retrieve params from previous middle wares
+});
 // routes
 router.use("/:material_id/video", videosController);
 router.use("/:material_id/document", documentsController);
@@ -17,8 +19,11 @@ router.post("/", async (req: Request, res: Response) => {
     try {
         const material: Material = req.body;
         const materialUser: User = new User();
+        const course: Course = new Course();
         materialUser.id = res.locals.id;
+        course.id = req.params.course_id ? Number(req.params.course_id) : null;
         material.user = materialUser;
+        material.course = course;
 
         // validate types
         if (

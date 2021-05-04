@@ -6,8 +6,8 @@ import {
     UpdateDateColumn,
     OneToMany
 } from "typeorm";
-
 import { Material } from "../entity/material";
+import { Course } from "./course";
 
 export enum userGender {
     MALE = "male",
@@ -75,5 +75,8 @@ export class User {
 
     @OneToMany(() => Material, material => material.user)
     materials: Material[];
+
+    @OneToMany(() => Course, course => course.user)
+    courses: Material[];
 
 }

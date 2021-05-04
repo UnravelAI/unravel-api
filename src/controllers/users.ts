@@ -4,11 +4,13 @@ import { User } from "../entity/user";
 import { checkIfExists, validateUserFields, UniqueUserElements } from "../helpers/users"
 import bcrypt from "bcryptjs";
 import materials from "./materials";
+import courses from "./courses";
 import authenticateUser from "../middleware/authenticateUser";
 
 const router = Express.Router();
 
 router.use("/materials", authenticateUser, materials);
+router.use("/courses", authenticateUser, courses);
 
 // create new user
 router.post("/", async (req: Express.Request, res: Express.Response) => {
