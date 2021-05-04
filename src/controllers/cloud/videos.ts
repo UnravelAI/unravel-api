@@ -4,6 +4,8 @@ import { getConnection, Repository } from "typeorm";
 import { Video, videoStatus } from "../../entity/video";
 const router = Express.Router();
 import { transcribe } from "../../helpers/transcribeAWS";
+import axios from "axios";
+
 /*
 
     Generate URL endpoint
@@ -63,7 +65,7 @@ router.put("/transcribe", async (req: Request, res: Response) => {
         const transcribeJobName = fileName.substring(0, fileName.lastIndexOf('.')); // fileName without extension
         await transcribe(audioURL, transcribeJobName);
         return res.status(200).json({
-            message: `Starting transcription job for: ${fileName}`,
+            message: `Transcription started for: ${fileName}`,
         });
 
     } catch (error) {
@@ -77,6 +79,59 @@ router.put("/transcribe", async (req: Request, res: Response) => {
                 message: "invalid audio url",
             });
         }
+        return res.status(500).json({
+            message: error.message,
+        });
+    }
+});
+
+/*
+
+    start editing -> update status: editing
+
+*/
+router.put("/edit", async (req: Request, res: Response) => {
+    try {
+        const fileName: string = req.body.fileName;
+        const intervals: any[] = req.body.intervals;
+
+        const videoRepository: Repository<Video> = await getConnection().getRepository(Video);
+        // retrieve video
+        const video = await videoRepository.findOne({ fileName });
+        if (!video) {
+            return res.status(404).json({
+                message: "Error: video not found",
+            });
+        }
+        if (video.status !== videoStatus.EDITABLE) {
+            return res.status(400).json({
+                message: "Error: video not editable",
+            });
+        }
+        // Trigger AWS editing lambda
+        const response = await axios({
+            method: 'post',
+            url: 'https://8tbqdfwu52.execute-api.us-east-1.amazonaws.com/default/video-editing-lambda',
+            data: {
+                fileName,
+                intervals,
+            }
+        })
+        console.log(response);
+        if (response.status !== 200) {
+            return res.status(response.status).json({
+                message: "AWS_ERROR",
+                error: response.data.error,
+            });
+        }
+        // update video status to editing
+        const updateResult = await videoRepository.update({ fileName }, {
+            status: videoStatus.EDITING,
+        });
+        return res.status(200).json({
+            message: `Editing started for: ${fileName}`,
+        });
+    } catch (error) {
         return res.status(500).json({
             message: error.message,
         });
