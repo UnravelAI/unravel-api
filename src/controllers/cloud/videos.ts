@@ -108,21 +108,16 @@ router.put("/edit", async (req: Request, res: Response) => {
                 message: "Error: video not editable",
             });
         }
-        /**
-         *
-         *
-         * Invoke vide editing lambda
-         *
-         *
-         */
+        // Trigger AWS editing lambda
         const response = await axios({
             method: 'post',
-            url: '',
+            url: 'https://8tbqdfwu52.execute-api.us-east-1.amazonaws.com/default/video-editing-lambda',
             data: {
                 fileName,
                 intervals,
             }
         })
+        console.log(response);
         if (response.status !== 200) {
             return res.status(response.status).json({
                 message: "AWS_ERROR",
