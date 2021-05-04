@@ -4,6 +4,8 @@ import { getConnection, Repository } from "typeorm";
 import { Video, videoStatus } from "../../entity/video";
 const router = Express.Router();
 import { transcribe } from "../../helpers/transcribeAWS";
+import axios from "axios";
+
 /*
 
     Generate URL endpoint
@@ -91,6 +93,8 @@ router.put("/transcribe", async (req: Request, res: Response) => {
 router.put("/edit", async (req: Request, res: Response) => {
     try {
         const fileName: string = req.body.fileName;
+        const intervals: any[] = req.body.intervals;
+
         const videoRepository: Repository<Video> = await getConnection().getRepository(Video);
         // retrieve video
         const video = await videoRepository.findOne({ fileName });
@@ -111,6 +115,20 @@ router.put("/edit", async (req: Request, res: Response) => {
          *
          *
          */
+        const response = await axios({
+            method: 'post',
+            url: '',
+            data: {
+                fileName,
+                intervals,
+            }
+        })
+        if (response.status !== 200) {
+            return res.status(response.status).json({
+                message: "AWS_ERROR",
+                error: response.data.error,
+            });
+        }
         // update video status to editing
         const updateResult = await videoRepository.update({ fileName }, {
             status: videoStatus.EDITING,
