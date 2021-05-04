@@ -8,7 +8,7 @@ import materialsController from "./materials";
 const router = Express.Router();
 
 // routes
-router.use("/:course_id/material", materialsController);
+router.use("/:course_id/materials", materialsController);
 
 // submit course
 router.post("/", async (req: Request, res: Response) => {
