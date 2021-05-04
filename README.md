@@ -67,7 +67,7 @@ The script builds the application and executes the new migrations.
 | /users/courses/ | POST | Object[Material] | Create new course
 | /users/courses/ | GET | {} | Get all courses
 | /users/courses/ | GET/:course_id | {} | Get specific course
-| <b>courses/materials</b>
+| <b>Courses/Materials</b>
 | /users/courses/:course_id/materials/ | POST | Object[Material] | Create new material
 | /users/courses/:course_id/materials/ | GET | {} | Get all user materials
 | /users/courses/:course_id/materials/ | GET/:material_id | {} | Get specific material
