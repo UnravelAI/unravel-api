@@ -59,9 +59,20 @@ The script builds the application and executes the new migrations.
 | /cloud/video/jobStatus/transcribe | PUT | {transcribeJobName} | Notify that transcription job is completed
 | <b>Materials</b>
 | /users/materials/ | POST | Object[Material] | Create new material
-| /users/materials/ | GET | {} | Get all materials
-| /users/materials/ | GET/:user_id | {} | Get specific user materials
+| /users/materials/ | GET | {} | Get all user materials
+| /users/materials/ | GET/:material_id | {} | Get specific material
 | /users/materials/:material_id/video | POST | multipart/form-data[video] | Upload a video
 | /users/materials/:material_id/document | POST | multipart/form-data[documentName] | Upload a document
+| <b>Courses</b>
+| /users/courses/ | POST | Object[Material] | Create new course
+| /users/courses/ | GET | {} | Get all courses
+| /users/courses/ | GET/:course_id | {} | Get specific course
+| <b>Courses/Materials</b>
+| /users/courses/:course_id/materials/ | POST | Object[Material] | Create new material
+| /users/courses/:course_id/materials/ | GET | {} | Get all user materials
+| /users/courses/:course_id/materials/ | GET/:material_id | {} | Get specific material
+| /users/courses/:course_id/materials/:material_id/video | POST | multipart/form-data[video] | Upload a video
+| /users/courses/:course_id/materials/:material_id/document | POST | multipart/form-data[documentName] | Upload a document
+
 
 
