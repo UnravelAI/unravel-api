@@ -64,7 +64,7 @@ The script builds the application and executes the new migrations.
 | /users/materials/:material_id/video | POST | multipart/form-data[video] | Upload a video
 | /users/materials/:material_id/document | POST | multipart/form-data[documentName] | Upload a document
 | <b>Courses</b>
-| /users/courses/ | POST | Object[Material] | Create new course
+| /users/courses/ | POST | Object[Course] | Create new course
 | /users/courses/ | GET | {} | Get all courses
 | /users/courses/ | GET/:course_id | {} | Get specific course
 | <b>Courses/Materials</b>
