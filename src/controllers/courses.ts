@@ -48,7 +48,7 @@ router.get("/", async (req: Request, res: Response) => {
         const courseRepository: Repository<Course> = await getConnection().getRepository(Course);
         const courses = await courseRepository.find({
             where: { user: courseUser },
-            relations: ["materials",]
+            relations: []
         });
         return res.status(200).json({
             message: "courses Retreived successfully",
