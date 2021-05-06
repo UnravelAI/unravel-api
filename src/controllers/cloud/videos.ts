@@ -17,24 +17,35 @@ router.put("/generateStreamingURL", async (req: Request, res: Response) => {
         const videoFileName: string = req.body.fileName;
         const guid: string = req.body.guid;
         const fileNameWExtension = videoFileName.substring(0, videoFileName.lastIndexOf('.'));
-        const streamableURL: string = "https://d10n7efzl01lxo.cloudfront.net/" + guid + "/AppleHLS1/" + fileNameWExtension + ".m3u8";
-        const audioURL: string = "s3://unravel-foundation-destination920a3c57-lzvld8jwflhj/" + guid + "/FileGroup1/" + fileNameWExtension + "audio.mp3";
-        const updateResult = await videoRepository.update(
-            { fileName: videoFileName },
-            {
-                streamingUrl: streamableURL,
-                audioUrl: audioURL,
-            },
-        );
-        if (!updateResult.affected) {
+        const video = await videoRepository.findOne({ fileName: videoFileName });
+        if (!video) {
             return res.status(404).json({
                 message: "Video not found"
             })
         }
+        const streamableURL: string = `https://d10n7efzl01lxo.cloudfront.net/${video.status === videoStatus.PROCESSING ? "Raw_Videos" : "Published_Videos"}/${guid}/AppleHLS1/${fileNameWExtension}.m3u8`;
+        const audioURL: string = `s3://unravel-foundation-destination920a3c57-lzvld8jwflhj/${video.status === videoStatus.PROCESSING ? "Raw_Videos" : "Published_Videos"}/${guid}/FileGroup1/${fileNameWExtension}audio.mp3`;
+        let updateResult: any;
+        if (video.status === videoStatus.PROCESSING) {
+            updateResult = await videoRepository.update(
+                { fileName: videoFileName },
+                {
+                    streamingUrl: streamableURL,
+                    audioUrl: audioURL,
+                },
+            );
+        }
+        else {
+            updateResult = await videoRepository.update(
+                { fileName: videoFileName },
+                {
+                    streamingUrl: streamableURL,
+                },
+            );
+        }
         return res.status(200).json({
             message: "video streamableURL updated successfully",
             streamableURL,
-            audioURL,
         })
     }
     catch (error) {
