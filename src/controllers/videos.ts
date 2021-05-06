@@ -5,8 +5,9 @@ import { Video } from "../entity/video";
 import { Material } from "../entity/material";
 import { videoUpload } from "../helpers/fileUpload";
 
-const router = Express.Router();
-
+const router = Express.Router({
+    mergeParams: true, // retrieve params from previous middle wares
+});
 /*
 
     Upload video endpoint
@@ -21,6 +22,7 @@ router.post("/", videoUpload.single("video"), async (req: Request, res: Response
 
         const materialsRepository = getConnection().getRepository(Material);
 
+        console.log("Material ID: ", req.params.material_id);
         const material = await materialsRepository.findOne(req.params.material_id);
 
         material.video = newVideo;
