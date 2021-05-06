@@ -43,13 +43,13 @@ router.get("/", async (req: Request, res: Response) => {
     try {
         const courseUser: User = new User();
         courseUser.id = res.locals.id;
-
+        const UserID = res.locals.id;
         // retrieve user's courses
         const courseRepository: Repository<Course> = await getConnection().getRepository(Course);
-        const courses = await courseRepository.find({
-            where: { user: courseUser },
-            relations: []
-        });
+        const courses = await courseRepository.createQueryBuilder('course').select([
+            'course.id',
+            'course.name',
+        ]).loadRelationCountAndMap('course.materials', 'course.materials').where('course.userId = :userid', { userid: UserID }).getMany();
         return res.status(200).json({
             message: "courses Retreived successfully",
             data: courses,
