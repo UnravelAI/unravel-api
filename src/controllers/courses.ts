@@ -41,8 +41,6 @@ router.post("/", async (req: Request, res: Response) => {
 // fetch all courses
 router.get("/", async (req: Request, res: Response) => {
     try {
-        const courseUser: User = new User();
-        courseUser.id = res.locals.id;
         const UserID = res.locals.id;
         // retrieve user's courses
         const courseRepository: Repository<Course> = await getConnection().getRepository(Course);
