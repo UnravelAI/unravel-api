@@ -61,6 +61,7 @@ router.get("/", async (req: Request, res: Response) => {
         const materialRepository: Repository<Material> = await getConnection().getRepository(Material);
         const materials = await materialRepository.find({
             where: { user: materialUser },
+            order: { updatedAt: 'DESC' },
             relations: ["video", "document", "course"],
         });
         return res.status(200).json({
