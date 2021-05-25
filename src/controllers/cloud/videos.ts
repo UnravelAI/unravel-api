@@ -27,16 +27,16 @@ router.put("/generateStreamingURL", async (req: Request, res: Response) => {
         message: "Video not found",
       });
     }
-    const streamableURL: string = `https://d10n7efzl01lxo.cloudfront.net/${
-      video.status === videoStatus.PROCESSING
-        ? "Raw_Videos"
-        : "Published_Videos"
-    }/${guid}/AppleHLS1/${fileNameWExtension}.m3u8`;
-    const audioURL: string = `s3://unravel-foundation-destination920a3c57-lzvld8jwflhj/${
-      video.status === videoStatus.PROCESSING
-        ? "Raw_Videos"
-        : "Published_Videos"
-    }/${guid}/FileGroup1/${fileNameWExtension}audio.mp3`;
+    const streamableURL: string = `https://d10n7efzl01lxo.cloudfront.net/${video.status === videoStatus.PROCESSING
+      ? "Raw_Videos"
+      : "Published_Videos"
+      }/${guid}/AppleHLS1/${fileNameWExtension}${video.status === videoStatus.PROCESSING
+        ? ""
+        : "_EDITED"}.m3u8`;
+    const audioURL: string = `s3://unravel-foundation-destination920a3c57-lzvld8jwflhj/${video.status === videoStatus.PROCESSING
+      ? "Raw_Videos"
+      : "Published_Videos"
+      }/${guid}/FileGroup1/${fileNameWExtension}audio.mp3`;
     let updateResult: any;
     if (video.status === videoStatus.PROCESSING) {
       updateResult = await videoRepository.update(
