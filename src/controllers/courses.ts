@@ -7,6 +7,16 @@ import materialsController from "./materials";
 
 const router = Express.Router();
 
+const makeid = (length:number) => {
+    let result           = '';
+    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+}
+
 // routes
 router.use("/:course_id/materials", materialsController);
 
@@ -17,7 +27,7 @@ router.post("/", async (req: Request, res: Response) => {
         const courseUser: User = new User();
         courseUser.id = res.locals.id;
         course.user = courseUser;
-
+        course.code = makeid(5);
         // validate types
         if (typeof course.name !== "string" || isNaN(course.user.id)) {
             return res.status(400).json({

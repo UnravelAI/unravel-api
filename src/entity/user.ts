@@ -4,7 +4,9 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
-    OneToMany
+    OneToMany,
+    ManyToMany,
+    JoinTable,
 } from "typeorm";
 import { Material } from "../entity/material";
 import { Course } from "./course";
@@ -77,6 +79,10 @@ export class User {
     materials: Material[];
 
     @OneToMany(() => Course, course => course.user)
-    courses: Material[];
+    courses: Course[];
+
+    @ManyToMany(() => Course)
+    @JoinTable()
+    enrolled: Course[];
 
 }

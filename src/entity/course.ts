@@ -7,6 +7,7 @@ import {
     OneToMany,
     ManyToOne,
     JoinColumn,
+    ManyToMany,
 } from "typeorm";
 import { Material } from "./material";
 import { User } from "./user";
@@ -21,6 +22,11 @@ export class Course {
         nullable: true,
     })
     name: string;
+
+    @Column({
+        nullable: true,
+    })
+    code: string;
 
     @OneToMany(() => Material, material => material.course)
     materials: Material[];
