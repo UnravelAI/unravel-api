@@ -76,7 +76,7 @@ router.get("/course/:id/materials", async (req: Request, res: Response) => {
             relations: ["video", "document"],
         });
         for( let i = 0; i < materials.length; i++){
-            if (!(( materials[i].video && materials[i].video.status==="published")|| materials[i].document.length)) {
+            if (!( materials[i].video && materials[i].video.status==="published")) {
                 materials.splice(i, 1);
                 i--;
             }
