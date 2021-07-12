@@ -28,11 +28,12 @@ router.post("/pii", async (req: Request, res: Response) => {
             0,
             videoFileName.lastIndexOf(".")
         );
+        console.log("fileName without extention: ", fileNameWExtension);
 
         const video = await videoRepository.findOne({ fileName: fileNameWExtension + ".mp4" });
         if (!video) {
             return res.status(404).json({
-                message: "Video not found",
+                message: `Video: ${fileNameWExtension + ".mp4"} not found`,
             });
         }
 
@@ -42,11 +43,12 @@ router.post("/pii", async (req: Request, res: Response) => {
             Text: req.body.text,
             LanguageCode: "en",
         }
-        console.log(input.Text);
+        console.log("Text:", input.Text);
 
         // get pii analysis from AWS
         const detectPii = new DetectPiiEntitiesCommand(input);
         const piiResponse = await client.send(detectPii);
+        console.log("AWS Response: ", piiResponse)
 
         // create textAnalysis object
         const analysis = new TextAanalysis();
