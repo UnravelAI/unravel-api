@@ -41,7 +41,7 @@ The script builds the application and executes the new migrations.
 ## Temporary: to run migrations on heroku:
 1. Edit ormconfig.json to herokous postgres dyno credentials
 2. Add `"extra": { "ssl": true }` to ormconfig.json
-3. run `./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run on herkou` on heroku cli
+3. run `./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run` on heroku cli
 4. Reset ormconfig to local configuration
 
 ## API Endpoints (Admin)
