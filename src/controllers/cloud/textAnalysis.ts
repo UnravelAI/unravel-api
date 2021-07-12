@@ -42,6 +42,7 @@ router.post("/pii", async (req: Request, res: Response) => {
             Text: req.body.text,
             LanguageCode: "en",
         }
+        console.log(input.Text);
 
         // get pii analysis from AWS
         const detectPii = new DetectPiiEntitiesCommand(input);
