@@ -56,6 +56,7 @@ router.get("/", async (req: Request, res: Response) => {
         const courseRepository: Repository<Course> = await getConnection().getRepository(Course);
         const courses = await courseRepository.createQueryBuilder('course').select([
             'course.id',
+            'course.code',
             'course.name',
         ]).loadRelationCountAndMap('course.materials', 'course.materials').where('course.userId = :userid', { userid: UserID }).getMany();
         return res.status(200).json({
